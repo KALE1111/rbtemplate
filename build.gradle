@@ -1,0 +1,52 @@
+plugins {
+	id 'java'
+}
+
+repositories {
+	mavenLocal()
+	maven {url = 'https://repo.runelite.net/'}
+	maven {
+
+		url = 'https://maven.pkg.github.com/SkylerPIlot/RBEVPmvn'
+		credentials {
+			username = System.getenv("USERNAME")
+			password = System.getenv("TOKEN")
+		}
+	}
+	mavenCentral()
+}
+
+def runeLiteVersion = 'latest.release'
+
+dependencies {
+	compileOnly group: 'net.runelite', name:'client', version: runeLiteVersion
+
+	compileOnly 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+	testImplementation 'junit:junit:4.12'
+	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion
+	testImplementation group: 'net.runelite', name:'jshell', version: runeLiteVersion
+
+	compileOnly 'com.example:rbapi:0.0.3'
+	//runtimeOnly 'com.example:rbapi:0.0.3'
+	testImplementation 'com.example:rbapi:0.0.3'
+
+	//runtimeOnly group: 'net.runelite', name:'client', version: runeLiteVersion
+	//runtimeOnly 'org.projectlombok:lombok:1.18.20'
+}
+
+task FatJarWithHidden(type: Jar) {
+	baseName = 'RBTemplate'
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jar
+}
+
+group = 'com.example'
+version = '1.0-SNAPSHOT'
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+	options.release.set(11)
+}
