@@ -9,8 +9,8 @@ repositories {
 
 		url = 'https://maven.pkg.github.com/SkylerPIlot/RBEVPmvn'
 		credentials {
-			username = System.getenv("USERNAME")
-			password = System.getenv("TOKEN")
+			username = "" //put your github username here -- inside the string
+			password = "" //put your github access token with read package permission here -- inside the string
 		}
 	}
 	mavenCentral()
@@ -28,9 +28,9 @@ dependencies {
 	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion
 	testImplementation group: 'net.runelite', name:'jshell', version: runeLiteVersion
 
-	compileOnly 'com.example:rbapi:0.0.3'
+	compileOnly 'com.example:rbapi:0.6.1'
 	//runtimeOnly 'com.example:rbapi:0.0.3'
-	testImplementation 'com.example:rbapi:0.0.3'
+	testImplementation 'com.example:rbapi:0.6.1'
 
 	//runtimeOnly group: 'net.runelite', name:'client', version: runeLiteVersion
 	//runtimeOnly 'org.projectlombok:lombok:1.18.20'
